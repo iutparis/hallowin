@@ -1,0 +1,553 @@
+@import url('https://fonts.googleapis.com/css2?family=Griffy&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+$griffy: 'Griffy', cursive;
+$nosifer: 'Nosifer', cursive;
+$creepster: 'Creepster', cursive;
+
+$land-height: 7em;
+$castle-color: #010c19;
+
+$menu-width: 16em;
+$size: $menu-width / 9;
+
+// orange
+$menu-bg-color: #ff7f27;
+$rope-bg-color: #a5490a;
+
+//bone
+$menu-bg-color2: #e7bb9d;
+$item-bg-color2: #d5c5b9;
+$rope-bg-color2: #565656;
+
+%page-size {
+  width: 100%;
+  min-width: 20em;
+  height: 100vh;
+  min-height: 30em;
+}
+
+%flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin absolute-position ($left, $bottom) {
+  position: absolute;
+  left: $left;
+  bottom: $bottom;
+  transform: translate(-50%, 0);
+}
+
+@mixin roof ($bottom, $width) { 
+  @include absolute-position ($left: 50%, $bottom: $bottom - 0.05em);
+  width: $width;
+  height: $width;
+  background: conic-gradient(
+    from 90deg at 50% 0%, transparent 0deg 63deg, $castle-color 63deg 117deg, transparent 117deg
+  );
+}
+
+@mixin door ($width) {
+  @include absolute-position ($left: 50%, $bottom: 0);
+  width: $width;
+  height: $width * 1.5;
+  border-radius: 50% 50% 5% 5% / 30% 30% 5% 5%;
+  background: 
+    radial-gradient(
+      at 50% 100%,
+      #fff0d8 0 70%,
+      #ff2900 70%
+    ) 0 50% / 100% 120%;
+}
+
+@mixin window ($width) {
+  width: $width;
+  height: $width * 1.5;
+  border-radius: 50% 50% 5% 5% / 30% 30% 5% 5%;
+  background: 
+    linear-gradient(
+      transparent 0 35%, 
+      $castle-color 35% 45%, 
+      transparent 45%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0 45%, 
+      $castle-color 45% 55%, 
+      transparent 55%
+    ),
+    radial-gradient(
+      at 50% 100%,
+      #ffffd7 0 45%,
+      #f8ef9d 60%
+    );
+}
+
+@mixin building ($height, $width) {
+  width: $width;
+  height: $height;
+  background: #010c19;
+  
+  .roof {
+    @include roof ($bottom: $height, $width: $width);
+  }
+  
+  $window-width: $width / 5;
+  $left-window: $window-width * 1.5;
+  $right-window: $width - $window-width * 1.5;
+  $bottom3-window: 75%;
+  $bottom2-window: 47%;
+  $bottom1-window: 19%;
+  
+  .w1 {
+    @include absolute-position ($left: $left-window, $bottom: $bottom3-window);
+    @include window ($width: $window-width);
+  }
+  .w2 {
+    @include absolute-position ($left: $right-window, $bottom: $bottom3-window);
+    @include window ($width: $window-width);
+  }
+  .w3 {
+    @include absolute-position ($left: $left-window, $bottom: $bottom2-window);
+    @include window ($width: $window-width);
+  }
+  .w4 {
+    @include absolute-position ($left: $right-window, $bottom: $bottom2-window);
+    @include window ($width: $window-width);
+  }
+  .w5 {
+    @include absolute-position ($left: $left-window, $bottom: $bottom1-window);
+    @include window ($width: $window-width);
+  }
+  .w6 {
+    @include absolute-position ($left: $right-window, $bottom: $bottom1-window);
+    @include window ($width: $window-width);
+  }
+  
+  .w1-2 {
+    @include absolute-position ($left: 50%, $bottom: $bottom3-window * 0.9);
+    @include window ($width: $window-width * 1.5);
+  }
+  
+  .w3-4 {
+    @include absolute-position ($left: 50%, $bottom: $bottom2-window * 0.7);
+    @include window ($width: $window-width * 1.5);
+  }
+  
+  .w1-2-c {
+    @include absolute-position ($left: 50%, $bottom: $bottom3-window * 1.1);
+    @include window ($width: $window-width * 1.7);
+    border-radius: 50%;
+    height: $window-width * 1.7;
+  }
+  
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: max(10px, 1.5vw);
+  position: relative;
+}
+
+.bg-container {
+  @extend %page-size;
+  background: #09092b;
+  position: relative;
+  overflow: hidden;
+  filter: saturate(60%) sepia(30%) ;
+}
+
+.moon-light {
+  @include absolute-position ($left: 70%, $bottom: 10em);
+  width: 30em;
+  height: 30em;
+  background: radial-gradient(
+    #ffffff 0 46%, 
+    #ffffff4d 48%, 
+    transparent 52%
+  );
+  filter: blur(150px);
+}
+
+.moon {
+  @include absolute-position ($left: 70%, $bottom: 15em);
+  width: 20em;
+  height: 20em;
+  border-radius: 50%;
+  background: radial-gradient(
+    #fffffd,
+    #fcf8d9
+  );
+  filter: blur(1px);
+}
+
+.land {
+  @include absolute-position ($left: 50%, $bottom: 0);
+  width: 75em;
+  height: $land-height;
+  background: radial-gradient(
+    ellipse at bottom,
+    #000d1c 0 20%,
+    $castle-color 50% 70%,
+    transparent 70% 100%
+  ) 50% 0 / 105% 100%;
+}
+
+.castle {
+  @include absolute-position ($left: 70%, $bottom: $land-height * 0.8);
+}
+
+
+
+.b1 {
+  @include building ($height: 15em, $width: 8em);
+  @include absolute-position ($left: 50%, $bottom: 0em);
+  
+  .door {
+    @include door ($width: 3em);
+  }
+}
+
+.b2 {
+  @include building ($height: 12em, $width: 5em);
+  @include absolute-position ($left: calc(50% - 6em), $bottom: 0em);
+  transform: translate(-50%, 0) rotate(-8deg);
+}
+
+.b3 {
+  @include building ($height: 12em, $width: 5em);
+  @include absolute-position ($left: calc(50% + 6em), $bottom: 0em);
+  transform: translate(-50%, 0) rotate(8deg);
+}
+
+.b4 {
+  @include building ($height: 8em, $width: 4em);
+  @include absolute-position ($left: calc(50% - 10em), $bottom: 0em);
+  transform: translate(-50%, 0) rotate(-10deg);
+}
+
+.b5 {
+  @include building ($height: 8em, $width: 4em);
+  @include absolute-position ($left: calc(50% + 10em), $bottom: 0em);
+  transform: translate(-50%, 0) rotate(10deg);
+}
+
+// 
+// 
+// 
+
+@mixin bat($width, $left, $bottom, $bat-bg-color) {
+  $bat-color: $bat-bg-color;
+  @include absolute-position ($left: $left, $bottom: $bottom);
+  $height: $width / 2;
+  width: $width;
+  height: $height;
+  position: absolute;
+  transform: translate(-50%, 50%);
+  
+  .bat-body {
+    @include absolute-position ($left: 50%, $bottom: $height * 0.05);
+    width: $width / 4.5;
+    height: $height * 0.5;
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    background: $bat-color;
+  }
+  
+  .bat-head {
+    @include absolute-position ($left: 50%, $bottom: $height * 0.45);
+    width: $width / 7;
+    height: $width / 7;
+    border-radius: 50%;
+    background: $bat-color;
+  }
+  
+  .ear1 {
+    @include absolute-position ($left: 20%, $bottom: 50%);
+    width: $width / 12;
+    height: $width / 10;
+    border-radius: 0% 100% 40% 60% / 0% 100% 0% 100%;
+    background: $bat-color;
+  }
+  
+  .ear2 {
+    @include absolute-position ($left: 80%, $bottom: 50%);
+    width: $width / 12;
+    height: $width / 10;
+    border-radius: 100% 0% 60% 40% / 100% 0% 100% 0%;
+    background: $bat-color;
+  }
+  
+  .eye1 {
+    $left-eye1: $width / 36;
+    @include absolute-position ($left: 65%, $bottom: 50%);
+    width: $width / 30;
+    height: $width / 30;
+    border-radius: 50%;
+    background: #fff;
+  }
+  
+  .eye2 {
+    @include absolute-position ($left: 35%, $bottom: 50%);
+    width: $width / 30;
+    height: $width / 30;
+    border-radius: 50%;
+    background: #fff;
+  }
+  
+  .eye1, .eye2 {
+    &:before {
+      content: '';
+      @include absolute-position ($left: 60%, $bottom: 5%);
+      width: $width / 40;
+      height: $width / 40;
+      border-radius: 50%;
+      background: #000;
+    }
+    
+    &:after {
+      content: '';
+      @include absolute-position ($left: 50%, $bottom: 25%);
+      width: $width / 65;
+      height: $width / 65;
+      border-radius: 50%;
+      background: #fff;
+    }
+  }
+  
+  
+  .wing {
+    .w1 {
+      $left-w1: -$width / 350;
+      @include absolute-position ($left: $left-w1, $bottom: 0);
+      width: $width / 6;
+      height: $width / 8;
+      background: $bat-color;
+    }
+    .w2 {
+      $left-w2: -$width / 8.4;
+      $bottom-w2: -$width / 12.5;
+      @include absolute-position ($left: $left-w2, $bottom: $bottom-w2);
+      width: $width / 14;
+      height: $width / 5;
+      background: $bat-color;
+      clip-path: polygon(0 80%, 100% 100%, 100% 0);
+    }
+    .w3 {
+      $left-w3: $width / 9.6;
+      $bottom-w3: $width / 8.2;
+      @include absolute-position ($left: $left-w3, $bottom: $bottom-w3);
+      width: $width / 3.2;
+      height: $width / 13;
+      background: $bat-color;
+      clip-path: polygon(0% 0, 100% 100%, 0 100%);
+    }
+    .w4 {
+      $left-w4: -$width / 350;
+      $bottom-w4: -$width / 12.5;
+      @include absolute-position ($left: $left-w4, $bottom: $bottom-w4);
+      width: $width / 6;
+      height: $width / 12;
+      background: radial-gradient(
+        transparent 0 70%,
+        $bat-color 70%
+      ) 2% 0 / 250% 250%;
+    }
+    .w5 {
+      $left-w5: $width / 6.35;
+      @include absolute-position ($left: $left-w5, $bottom: 0em);
+      width: $width / 6.2;
+      height: $width / 8;
+      background: radial-gradient(
+        transparent 0 70%,
+        $bat-color 70%
+      ) 0% 0 / 200% 200%;
+    }
+    .w6 {
+      $left-w6: -$width / 11.7;
+      $bottom-w6: $width / 8.2;
+      @include absolute-position ($left: $left-w6, $bottom: $bottom-w6);
+      width: $width / 14;
+      height: $width / 13;
+      background: radial-gradient(
+        transparent 0 70%,
+        $bat-color 70%
+      ) 100% 100% / 200% 200%;
+    }
+  }
+  
+  .wing1 {
+    @include absolute-position ($left: 69%, $bottom: $height * 0.3);
+  }
+  .wing2 {
+    @include absolute-position ($left: 31%, $bottom: $height * 0.3);
+    transform: scaleX(-1);
+  }
+}
+
+.bat {
+  @include bat($width: 26em, $left: 30%, $bottom: 83.2%, $bat-bg-color: #fff);
+  filter: blur(20px);
+}
+
+.bat2 {
+  @include bat($width: 25em, $left: 30%, $bottom: 83%, $bat-bg-color: #000);
+}
+
+// 
+// 
+// 
+
+.color-modes {
+  @include absolute-position ($left: 5%, $bottom: 90%);
+  top: 0%;
+  padding: 20px;
+  z-index: 10;
+}
+
+.orange-mode, .bone-mode {
+  width: 30px;
+  height: 20px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.orange-mode {
+  background: $menu-bg-color;
+}
+
+.bone-mode {
+  background: $menu-bg-color2;
+}
+
+.menu {
+  @include absolute-position ($left: 30%, $bottom: 40%);
+  transform: translate(-50%, 50%);
+  font-size: max(20px, 1.0vw);
+  text-align: center;
+  padding: 2em;
+  user-select: none;
+}
+
+.sign {
+  @extend %flex-center;
+  flex-direction: column;
+  width: $menu-width;
+  height: $menu-width / 3;
+  background: $menu-bg-color;
+  padding: 1em 1.5em; 
+  border-radius: 10px;
+  cursor: pointer;
+  
+  span:nth-of-type(1) {
+    font-family: $griffy;
+    font-size: max(40px, 2vw);
+  }
+  span:nth-of-type(2) {
+    font-family: $creepster;
+  }
+}
+
+.bone .sign {
+  background: $menu-bg-color2;
+}
+
+.item {
+  @extend %flex-center;
+  width: $menu-width * 0.8;
+  height: $size;
+  background: $menu-bg-color;
+  margin: 0 auto;
+  margin-top: 2em;
+  padding: 0.3em 1em; 
+  position: relative;
+  z-index: -1;
+  cursor: pointer;
+  
+  &:before, &:after {
+    @include absolute-position ($left: 20%, $bottom: 99%);
+    content: '';
+    width: 0.3em;
+    height: 2.1em;
+    display: block;
+    background: $menu-bg-color;
+    z-index: -1;
+  }
+  
+  &:after {
+    left: 80%;
+  }
+  
+  .item-name {
+    font-family: $nosifer;
+    font-size: max(15px, 0.8vw);
+    position: relative;
+    display: block;
+  }
+  
+  .left-side, .right-side {
+    
+    @include absolute-position ($left: 0, $bottom: -$size / 4);
+    width: $size;
+    height: $size * 1.5;
+    
+    &:before, &:after {
+      @include absolute-position ($left: $size / 2, $bottom: -0.1 * $size);
+      content: '';
+      width: $size;
+      height: $size;
+      display: block;
+      border-radius: 50%;
+      background: $menu-bg-color;
+    }
+    
+    &:after {
+      bottom: $size * 0.6;
+    }
+  }
+  
+  .right-side {
+    left: 100%;
+  }
+}
+
+.bone .item {
+  background: $item-bg-color2;
+  
+  &:before, &:after {
+    background: $rope-bg-color2;
+  }
+  
+  .left-side, .right-side {
+    &:before, &:after {
+      background: $item-bg-color2;
+    }
+  }
+}
+
+
+@for $i from 1 through 6 {
+  .item:nth-child(#{$i + 1}) {
+    transform: translateY( -$i * (2em + $size) - 1em );
+    transition: ($i + 0.4) * 0.25s;
+    transition-timing-function: linear;
+    transition-property: transform;
+    
+  }
+}
+
+@for $i from 1 through 6 {
+  .sign.active ~ .item {
+    transform: translateY( 0 );
+  }
+}
