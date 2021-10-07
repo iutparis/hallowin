@@ -20,5 +20,3 @@ function toggleActive(e){
 function changeColorMode(mode) {
   document.getElementsByTagName('body')[0].className = mode;
 }
-
-
